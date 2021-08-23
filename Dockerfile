@@ -1,8 +1,5 @@
 FROM python:3.7-alpine
 
-ARG UID=1000
-ARG GID=1000
-ARG USERNAME=checkov
 
 RUN apk update && apk add --no-cache git util-linux bash openssl && \
     pip install --no-cache-dir -U checkov  && \
@@ -10,9 +7,9 @@ RUN apk update && apk add --no-cache git util-linux bash openssl && \
     addgroup -S -g ${GID} ${USERNAME} && \
     adduser -S -D -u ${UID} -G ${USERNAME} ${USERNAME} 
 
-COPY --chown=${USERNAME}:0 ./github_action_resources/entrypoint.sh /entrypoint.sh
-COPY --chown=${USERNAME}:0 ./github_action_resources/checkov-problem-matcher.json /usr/local/lib/checkov-problem-matcher.json
-COPY  --chown=${USERNAME}:0 ./github_action_resources/checkov-problem-matcher-softfail.json /usr/local/lib/checkov-problem-matcher-softfail.json
+COPY ./github_action_resources/entrypoint.sh /entrypoint.sh
+COPY ./github_action_resources/checkov-problem-matcher.json /usr/local/lib/checkov-problem-matcher.json
+COPY ./github_action_resources/checkov-problem-matcher-softfail.json /usr/local/lib/checkov-problem-matcher-softfail.json
 
 USER ${UID}
 
