@@ -8,9 +8,6 @@ then
   exit $?
 fi
 
-# added in for some debugging
-echo "GitHub workspace is $GITHUB_WORKSPACE"
-
 # Actions pass inputs as $INPUT_<input name> environmet variables
 #
 [[ -n "$INPUT_CHECK" ]] && CHECK_FLAG="--check $INPUT_CHECK"
