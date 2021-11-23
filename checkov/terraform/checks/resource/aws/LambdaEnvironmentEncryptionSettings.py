@@ -1,5 +1,6 @@
 from checkov.terraform.checks.resource.base_resource_check import BaseResourceCheck
-from checkov.common.models.enums import CheckResult,CheckCategories
+from checkov.common.models.enums import CheckResult, CheckCategories
+from checkov.common.util.aws_utils import isarn
 from typing import List
 
 
@@ -19,11 +20,12 @@ class LambdaEnvironmentEncryptionSettings(BaseResourceCheck):
                 if conf["kms_key_arn"] == ['']:
                     self.evaluated_keys = ["environment/kms_key_arn"]
                     return CheckResult.FAILED
-                return CheckResult.PASSED
+                if isarn(conf["kms_key_arn"]):
+                    return CheckResult.PASSED
             self.evaluated_keys = ["environment"]
             return CheckResult.FAILED
 
-        #no env vars so should be no key as that causes state mismatch
+        # no env vars so should be no key as that causes state mismatch
         if 'kms_key_arn' in conf:
             if len(conf["kms_key_arn"]) == 0:
                 return CheckResult.PASSED

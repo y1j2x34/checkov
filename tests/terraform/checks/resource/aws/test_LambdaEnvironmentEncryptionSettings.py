@@ -5,6 +5,7 @@ from checkov.runner_filter import RunnerFilter
 from checkov.terraform.checks.resource.aws.LambdaEnvironmentEncryptionSettings import check
 from checkov.terraform.runner import Runner
 
+
 class TestLambdaEnvironmentEncryptionSettings(unittest.TestCase):
     def test(self):
         runner = Runner()
@@ -17,7 +18,9 @@ class TestLambdaEnvironmentEncryptionSettings(unittest.TestCase):
         summary = report.get_summary()
 
         passing_resources = {
-            "aws_lambda_function.pass", 
+            "aws_lambda_function.pass",
+            "aws_lambda_function.modulepass",
+            "aws_lambda_function.passresource",
         }
         failing_resources = {
             "aws_lambda_function.fail",
@@ -28,7 +31,7 @@ class TestLambdaEnvironmentEncryptionSettings(unittest.TestCase):
         passed_check_resources = set([c.resource for c in report.passed_checks])
         failed_check_resources = set([c.resource for c in report.failed_checks])
 
-        self.assertEqual(summary["passed"], 1)
+        self.assertEqual(summary["passed"], 3)
         self.assertEqual(summary["failed"], 3)
         self.assertEqual(summary["skipped"], 0)
         self.assertEqual(summary["parsing_errors"], 0)
