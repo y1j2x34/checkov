@@ -6,7 +6,7 @@ from checkov.terraform.checks.resource.aws.S3ProtectAgainstPolicyLockout import 
 from checkov.terraform.runner import Runner
 
 
-class TestS3ObjectCopyEncryptedWithCMK(unittest.TestCase):
+class TestS3ProtectAgainstPolicyLockout(unittest.TestCase):
     def test(self):
         runner = Runner()
         current_dir = os.path.dirname(os.path.realpath(__file__))
