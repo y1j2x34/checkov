@@ -21,7 +21,7 @@ resource "aws_lambda_function" "no_env" {
 # fail
 
 resource "aws_lambda_function" "fail" {
-  function_name = "stest-env"
+  function_name = "test-env"
   role = ""
   runtime = "python3.8"
 
